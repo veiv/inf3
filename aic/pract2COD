@@ -1,0 +1,33 @@
+; Ordenar los elementos de un vector a
+; Tamaño del vector: 10 palabras
+
+	.data
+; Vector a
+a:	.word  9,8,7,6,5,4,3,2,1,0
+
+	.text
+start:	add r1,r0,a
+	add r11,r1,#36 ; 9*4
+	add r21,r1,#40 ; 10*4
+		lw r10,0(r1)
+loopi:	
+	add r2,r1,#4
+		lw r20,0(r2)
+loopj:	
+if:	sgt r3,r10,r20
+	beqz r3, endif
+		
+then:	sw 0(r1),r20
+	sw 0(r2),r10
+	add r10,r20,r0
+		
+endif:	
+	add r2,r2,#4
+	seq r3,r2,r21
+	beqz r3,loopj
+		lw r20,0(r2)
+	add r1,r1,#4
+	seq r3,r1,r11
+	beqz r3,loopi
+		lw r10,0(r1)
+	trap #0
