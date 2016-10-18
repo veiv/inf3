@@ -1,0 +1,26 @@
+var zmq = require('zmq')
+var publisher = zmq.socket('pub')
+var port = ("tcp://*:"+ process.argv[2]);
+var num = process.argv[3];
+var type1 = process.argv[4];
+var type2 = process.argv[5];
+var aux = require('./auxfunctions');
+
+publisher.bind(port, function(err) {
+  if(err)
+    console.log(err)
+  else
+    console.log("Listening on "+ process.argv[2])
+})
+
+for (var i=1 ; i<num ; i++)
+    setTimeout(function() {
+        console.log('sent');
+        publisher.send(type1 + " Hello there! You're subscribed to "+ type1 +" " + aux.randNumber(4000,0))
+		publisher.send(type2 + " Hello there! You're subscribed to "+ type2 +" " + aux.randNumber(6000,0))
+    }, 1000 * i)
+
+process.on('SIGINT', function() {
+  publisher.close()
+  console.log('\nClosed')
+})
