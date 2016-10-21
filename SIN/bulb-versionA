@@ -1,6 +1,3 @@
-
-
-
 (deffacts bulb-robot
 	(grid 5 4)
 	(wh 2 3)
@@ -12,28 +9,28 @@
 	(test (< ?x ?c))
         (wh ?wx ?wy)
 	=>
-	(assert (robot (+ ?x 1) $?y level (+ ?l 1))))
+	(assert (robot (+ ?x 1) ?y ?bum $?lam level (+ ?l 1))))
 (defrule left
 	(robot ?x ?y ?bum $?lam level ?l)
 	(grid ?c ?v)
 	(test (> ?x 1))
 	(wh ?wx ?wy)
 	=>
-	(assert (robot (- ?x 1) ?y $?p level (+ ?l 1))))
+	(assert (robot (- ?x 1) ?y ?bum $?lam level (+ ?l 1))))
 (defrule up
 	(robot ?x ?y ?bum $?lam level ?l)
 	(grid ?c ?v)
 	(test (< ?y ?v))
 	(wh ?wx ?wy)
 	=>
-	(assert (robot ?x (+ ?y 1)  $?p level (+ ?l 1))))
+	(assert (robot ?x (+ ?y 1) ?bum $?lam level (+ ?l 1))))
 (defrule down
 	(robot ?x ?y ?bum $?lam level ?l)
 	(grid ?c ?v)
 	(test (> ?y 1))
 	(wh ?wx ?wy)	
 	=>
-	(assert (robot ?x (- ?y 1) $?p level (+ ?l 1))))
+	(assert (robot ?x (- ?y 1) ?bum $?lam level (+ ?l 1))))
 (defrule reload
 	(robot ?x ?y ?bum $?lam lamp ?t ?h ?u $?m level ?l)
 	(wh ?e ?r)
@@ -41,7 +38,7 @@
 	(test(= ?y ?r))
 	(wh ?wx ?wy)
 	=>
-	(assert (robot ?x ?y ?u $?p lamp ?t ?h ?u $?m level (+ ?l 1)) ))
+	(assert (robot ?x ?y ?u $?lam lamp ?t ?h ?u $?m level (+ ?l 1)) ))
 (defrule change
 	(robot ?x ?y ?bum $?p lamp ?t ?h ?u $?m level ?l)
 	(test (= ?x ?t))
@@ -50,7 +47,7 @@
 	(test (>= ?bum ?u))
 	(wh ?wx ?wy)
 	=>
-	(assert (robot ?x ?y (- ?k ?u) $?p lamp ?t ?h 0 $?m level (+ ?l 1)) ))
+	(assert (robot ?x ?y (- ?bum ?u) $?p lamp ?t ?h 0 $?m level (+ ?l 1)) ))
 (defrule objective
  	(declare (salience 100))	
 	(robot ?x ?y ?k lamp ?a ?b 0 lamp ?c ?d 0 lamp ?e ?f 0 level ?l)
