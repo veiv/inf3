@@ -1,0 +1,23 @@
+// Hello World server in Node.js
+// Connects REP socket to tcp://*:5560
+// Expects "Hello" from client, replies with "World"
+//he cambiado rep por req porque es un requester
+var zmq = require('zmq')
+  , requester = zmq.socket('req');
+//var url = ("tcp://127.0.0.1:"+ process.argv[2]);
+var url = ("tcp://127.0.0.1:"+process.argv[2]);
+var workID = process.argv[3];
+var readyMSG = process.argv[4];
+var doneMSG = process.argv[5];
+var tru_fal = process.argv[4];
+//var waitTime = process.argv[3];
+//var text = process.argv[4];
+requester.identity=workID;
+requester.connect(url);
+requester.send(readyMSG);
+requester.on('message', function(msg) {
+  console.log('received request:', msg.toString());
+  setTimeout(function() {
+    requester.send(doneMSG);
+  }, 10000);
+});
