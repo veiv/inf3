@@ -1,11 +1,13 @@
 
-var net = require('net');
-
-var msg = JSON.stringify({
-	"ip":process.argv[3],
-	"port":process.argv[4]
-});
-
-console.log(msg);
-
-var socket = net.connect({port:process.argv[4], address:process.argv[2]}, function() {socket.write(msg);});
+var net =require('net')
+var remote_ip=process.argv[3];
+var remote_port=process.argv[2];
+var msg=JSON.stringify({
+"remote_ip":remote_ip,
+"remote_port":remote_port,
+}
+)
+var socket = net.connect({port:8001},
+ function() {socket.write(msg);
+console.log(msg)
+socket.end();})
